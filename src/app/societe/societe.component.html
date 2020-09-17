@@ -1,0 +1,61 @@
+<div class="container" *ngIf="mode==1">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Listes des Societes</div>
+        <div class="panel-body">
+            <a class="btn btn-primary" routerLink="/new-societe"> Ajouter Societes</a>
+        <form class="text-right" #f="ngForm" (submit)="onChercher(f.value)">
+                <div class="form-group">
+                    <label>Chercher par nom Societe</label>
+                    <input type="text" name="keyword" ngModel>
+                    <button type="submit" class="btn btn-primary">Chercher</button>
+                </div>
+            </form>
+        </div>
+        <div class="panel-body">
+            <table *ngIf="societes" class="table table-striped">
+                <thead class="table table-striped table-dark">
+                    <tr>
+                        <th width="10%" class="text-center">ID</th>
+                        <th width="10%" class="text-center">Nom</th>
+                        <th width="50%" class="text-center">adresse</th>
+                        <th width="30%" class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of societes">
+                        <td class="text-center">{{p.id}}</td>
+                        <td class="text-center">{{p.nom}}</td>
+                        <td class="text-center">{{p.adresse}}</td>
+                        <td class="text-center">
+                            <button (click)="EmployeSociete(p.id,p.nom)" class="btn btn-success">Employes</button>&nbsp;
+                            <button (click)="onDeleteSociete(p.id,p.nom)" class="btn btn-danger">Delete</button>&nbsp;
+                            <button (click)="onEditSociete(p)" class="btn btn-info">Update</button>&nbsp;
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="container" *ngIf="mode==2">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Listes des Employes pour la societe {{nom}}</div>
+        <div class="panel-body">
+         <button class="btn btn-primary" (click)=" allsociete()">Tous les Societes</button>
+            <table *ngIf="employes" class="table table-striped">
+                <thead class="table table-striped table-dark">
+                    <tr>
+                        <th width="10%" class="text-center">Nom</th>
+                        <th width="50%" class="text-center">SALAIRE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let p of employes._embedded.employes">
+                        <td class="text-center">{{p.nom}}</td>
+                        <td class="text-center">{{p.salaire}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
